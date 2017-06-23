@@ -8,35 +8,26 @@ SYSTEM_MODE(SEMI_AUTOMATIC);
 
 void reportCallback(advertisementReport_t *report) 
 {
-    uint8_t index;
-
-    Serial.println("reportCallback: ");
-    Serial.print("The advEventType: ");
-    Serial.println(report->advEventType, HEX);
-    Serial.print("The peerAddrType: ");
-    Serial.println(report->peerAddrType, HEX);
-    Serial.print("The peerAddr: ");
-    for (index = 0; index < 6; index++) {
-        Serial.print(report->peerAddr[index], HEX);
-        Serial.print(" ");
+    int i;
+    char hex[3];
+    
+    // MAC Address
+    for(i=0; i<6; i++) {
+        sprintf(hex, "%02X:", report->peerAddr[i]);
+        Serial.print(hex);
     }
-    Serial.println(" ");
-
-    Serial.print("The rssi: ");
-    Serial.println(report->rssi, DEC);
-
-    if (report->advEventType == BLE_GAP_ADV_TYPE_SCAN_RSP) {
-        Serial.print("The scan response data: ");
+    Serial.print("\t");
+    
+    // RSSI
+    Serial.print(report->rssi);
+    Serial.print("\t");
+        
+    // RAW Data
+    for(i=0; i<report->advDataLen; i++) {
+        sprintf(hex, "%02X", report->advData[i]);
+        Serial.print(hex);
     }
-    else {
-        Serial.print("The advertising data: ");
-    }
-    for (index = 0; index < report->advDataLen; index++) {
-        Serial.print(report->advData[index], HEX);
-        Serial.print(" ");
-    }
-    Serial.println(" ");
-    Serial.println(" ");
+    Serial.println();
 }
 
 void setup() 
