@@ -18,6 +18,7 @@ void setup()
     RGB.color(0, 0, 0);
     
     // set up the LCD's number of columns and rows:
+    Wire.begin();
     delay(3000);
     lcd.begin(16, 2);
     

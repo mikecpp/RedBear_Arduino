@@ -1,28 +1,30 @@
-#include <Wire.h>
-#include <SeeedOLED.h>
-
 #if defined(ARDUINO) 
 SYSTEM_MODE(SEMI_AUTOMATIC); 
 #endif
+
+#include "SeeedGrayOLED.h"
 
 void setup()
 {
     RGB.control(true);
     RGB.color(0, 0, 0);
     
-  Wire.begin();
-  SeeedOled.init();  //initialze SEEED OLED display
-
-  SeeedOled.clearDisplay();          //clear the screen and set start position to top left corner
-  SeeedOled.setNormalDisplay();      //Set display to normal mode (i.e non-inverse mode)
-  SeeedOled.setPageMode();           //Set addressing mode to Page Mode
-  SeeedOled.setTextXY(0,0);          //Set the cursor to Xth Page, Yth Column  
-  SeeedOled.putString("Hello World!"); //Print the String
-
+    Wire.begin();
+    
+    SeeedGrayOled.init(SSD1327);      // initialize SEEED OLED display
+    SeeedGrayOled.clearDisplay();     // Clear Display.
+    SeeedGrayOled.setNormalDisplay(); // Set Normal Display Mode
+    SeeedGrayOled.setVerticalMode();  // Set to vertical mode for displaying text 
 }
 
 void loop()
 {
-  
+    char msg[32];
+    static int count = 0;
+
+    sprintf(msg, "Count = %d", count++);
+    SeeedGrayOled.setTextXY(5,0);
+    SeeedGrayOled.putString(msg);    
+    delay(1000);
 }
 
