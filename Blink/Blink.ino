@@ -7,6 +7,7 @@ int led2 = D7;
 
 void setup() 
 {
+    Serial.begin(115200);
     Serial.println("Blink Demo");
     pinMode(led1, OUTPUT);
     pinMode(led2, OUTPUT);

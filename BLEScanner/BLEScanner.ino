@@ -33,6 +33,10 @@ void reportCallback(advertisementReport_t *report)
 void setup() 
 {
     Serial.begin(115200);
+
+    RGB.control(true);
+    RGB.color(0,0,0);
+    
     Serial.println("BLE Scan Demo...");
     delay(5000);
       
